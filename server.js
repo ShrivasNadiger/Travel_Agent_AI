@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import tourismRoutes from './routes/tourism.js';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,7 +18,12 @@ app.get('/', (req, res) => {
     res.send('Tourism Multi-Agent System API is running');
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Export the app for Vercel
+export default app;
+
+// Only start the server if running directly (not imported)
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}

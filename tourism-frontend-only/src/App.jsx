@@ -19,8 +19,8 @@ export default function App() {
         setLoading(true)
 
         try {
-            // ADAPTED: Changed URL to port 3000 and payload key to 'place' to match backend
-            const resp = await axios.post('http://localhost:3000/api/v1/tourism', { place: city }, { timeout: 30000 })
+            // ADAPTED: Use relative path. Vite proxy handles this in dev, Vercel handles in prod.
+            const resp = await axios.post('/api/v1/tourism', { place: city }, { timeout: 30000 })
             const res = resp.data
             if (res.error) {
                 setError(res.message || res.error || 'Unknown error')
